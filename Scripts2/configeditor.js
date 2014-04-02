@@ -2242,7 +2242,7 @@ function draw() {
 			});	
 //			}
 			window['variable' + dynamicLayer[pageCanvas]]="";
-			window['variable' + dynamicLayer[pageCanvas]] = new Kinetic.Layer(); // initialize per layer of images or object in canvas
+			window['variable' + dynamicLayer[pageCanvas]] = new Kinetic.Layer({  clearBeforeDraw: true  }); // initialize per layer of images or object in canvas
 //			if (globalDeviceType != "Mobile"){
 				window['variable' + dynamicMiniLayer[pageCanvas]]="";
 				window['variable' + dynamicMiniLayer[pageCanvas]] = new Kinetic.Layer(); // initialize per layer of images or object in canvas
@@ -2397,7 +2397,7 @@ function checkNum(num){
 
 function reDrawImage(){
 	var x = 0 ;
-	window['variable' + dynamicLayer[pageCanvas]] = new Kinetic.Layer({draggable:true});
+	window['variable' + dynamicLayer[pageCanvas]] = new Kinetic.Layer({draggable:true,clearBeforeDraw: true });
 	createLine('canvasID');
 	if(globalInfoType == "JSON"){
         var devices = getDevicesNodeJSON();
@@ -2479,7 +2479,7 @@ function drawImage(flag,newscale){
             window['variable' + dynamicMiniLayer[pageCanvas]].remove().clearCache();
         }
     }
-    window['variable' + dynamicLayer[pageCanvas]] = new Kinetic.Layer();
+    window['variable' + dynamicLayer[pageCanvas]] = new Kinetic.Layer({  clearBeforeDraw: true  });
     createLine('canvasID');
     if(globalInfoType == "JSON"){
         var devices = getDevicesNodeJSON();
@@ -12044,7 +12044,9 @@ function dynamicCanvas(num){
 		border : "0px"
 	});	
 
-	window['variable' + dynamicLayer[divctr]] = new Kinetic.Layer(); // initialize per layer of images or object in canvas
+	window['variable' + dynamicLayer[divctr]] = new Kinetic.Layer({
+		 clearBeforeDraw: true
+	}); // initialize per layer of images or object in canvas
 	window['variable' + dynamicMiniLayer[pageCanvas]] = new Kinetic.Layer(); // initialize per layer of images or object in canvas
 	window['variable' + dynamicResourceId[divctr] ]= '';
 	window['variable' + dynamicMainId[divctr] ]= '';
