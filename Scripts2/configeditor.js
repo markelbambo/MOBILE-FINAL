@@ -1474,6 +1474,18 @@ function appendToDeviceListTable(data,condition,load, tabSelected){
 				 }
 			}
 		}
+		if(globalSelectedDeviceList.length==$('#carousellocal figure').length){
+			$('#checkAlllocal').prop('checked',true);
+			if(globalDeviceType == "Mobile"){
+				$('#selectAllBtn').addClass('ui-btn-active ui-checkbox-on');
+			}
+		}else{
+			$('#checkAlllocal').attr('checked',false);
+			if(globalDeviceType == "Mobile"){
+				$('#selectAllBtn').removeClass('ui-btn-active ui-checkbox-on');
+				$('#selectAllBtn').addClass('ui-checkbox-off');
+			}
+		}
 		setTimeout(function(){
 			fullHubDisEna();	
 		},100);
@@ -3718,7 +3730,7 @@ function checkDeviceInDbAutoD(){
 		var urlx = getURL("ConfigEditor2","JSON");
 		var queryS = "{  'QUERY' : [{ 'managementip' : '"+autoDDevData[0].ManagementIp
 			+"', 'consoleip' : '"+conip+"', 'hostname' : '"
-			+autoDDevData[0].HostName+"' }] }";
+			+autoDDevData[0].HostName+"', 'user': '"+globalUserName+"' }] }";
 	}
 
 	var conip = autoDDevData[0].ConsoleIp+":"+autoDDevData[0].ConsolePort;
@@ -12784,15 +12796,11 @@ function cancelstartEndReserve(flag,mainMenuFlag){
 		StartReservation="false";
 		if(globalDeviceType != "Mobile"){
 			$("#comOpStartRes").prop('checked', false);
-		}else{
-			$("#comOpStartRes").prop('checked', false).checkboxradio( "refresh" );
 		}
 	}else{
 		EndReservation="false";
 		if(globalDeviceType != "Mobile"){
 			$("#comOpEndRes").prop('checked', false);
-		}else{
-			$("#comOpEndRes").prop('checked', false).checkboxradio( "refresh" );
         }
 	}
 	if(globalDeviceType == "Mobile"){
@@ -14519,25 +14527,45 @@ function cyclePower(){
  */
 
 function selectAll(flag){
-	if($(".checkAll").is(":checked")){
-		if(globalDeviceType == "Mobile"){
-			$('#selectAllBtn').addClass('ui-btn-active ui-checkbox-on');
-		}
-		$(".trManageDevice").each(function(){
-			if(!$(this).hasClass('highlight')){
-				$(this).trigger('click');
-			}
-		});
-	}else{
-		if(globalDeviceType == "Mobile"){
+	var allFlag = $('#selectAllBtn').hasClass('ui-btn-active ui-checkbox-on');
+	if(globalDeviceType == "Mobile"){
+		if(allFlag){
 			$('#selectAllBtn').removeClass('ui-btn-active ui-checkbox-on');
 			$('#selectAllBtn').addClass('ui-checkbox-off');
+			allFlag = false;
+		}else{
+			$('#selectAllBtn').addClass('ui-btn-active ui-checkbox-on');
+			allFlag = true;
 		}
-		$(".trManageDevice").each(function(){
-			if($(this).hasClass('highlight')){
-				$(this).trigger('click');
-			}
-		});
+	}
+	if($(".checkAll").is(":checked") || allFlag){
+		if(globalDevListType=='graphical'){
+			$("#carousellocal figure").each(function(){
+				if(!$(this).hasClass('highlight')){
+					$(this).trigger('click');
+				}
+			});
+		}else{
+			$(".trManageDevice").each(function(){
+				if(!$(this).hasClass('highlight')){
+					$(this).trigger('click');
+				}
+			});
+		}
+	}else{
+		if(globalDevListType=='graphical'){
+			$("#carousellocal figure").each(function(){
+				if($(this).hasClass('highlight')){
+					$(this).trigger('click');
+				}
+			});
+		}else{
+			$(".trManageDevice").each(function(){
+				if($(this).hasClass('highlight')){
+					$(this).trigger('click');
+				}
+			});
+		}
 	}
 }
 
@@ -17564,7 +17592,6 @@ function checkManuType(){
     });
 	//partner address
 	$(document).on("change","#autoDPartAddOpt", function () {
-//        showautoDPortSrchTableByNum(3);
         showNewPartnerInfo($('#autoDPartTypeOpt > option:selected').text(),"device");
     });
 	//optional search details
@@ -17575,22 +17602,6 @@ function checkManuType(){
 			$('#autoDPartPortsSrchLblCont').hide();	
 		}
 	});
-/*	$(document).on("change", "#autoDPartPortsSrchOpt", function(){
-		if($('#autoDPartPortsSrchOpt > option:selected').text()=="Per Slot"){
-            showautoDPortSrchTableByNum(3);
-            $('#autoDPartPortsSrchNumLbl').hide();
-            $('#autoDPartPortsSrchNumCont').hide();
-        }else if($('#autoDPartPortsSrchOpt > option:selected').text()=="On Selected Slots"){
-            showautoDPortSrchTableByNum(2);
-            $('#autoDPartPortsSrchNumLbl').show();
-            $('#autoDPartPortsSrchNumCont').show();
-        }else{
-            $('#autoDPartPortsSrchNumLbl').hide();
-            $('#autoDPartPortsSrchNumCont').hide();
-        }
-	
-	});
-*/
 	$('#autoDDevSlotsIncChk').click(function(){
 		if($('#autoDDevSlotsIncChk').is(':checked')){
 			$('#autoDDevSlotsIncCountCont').show();
@@ -18054,15 +18065,14 @@ function gatherDataAutoD(type){
 					if(globalDeviceType == "Mobile") {
 						if(object.getAttribute('class')=='trAutoDP highlight'){
 							var tmpval = ","+object.children[0].innerHTML+":";
-//							if(object.children[2]){
-								var tmpcnt = object.children[2].getAttribute('value');
-//							}
+							var tmpcnt = $("#"+object.children[2].getAttribute('id')+" > input").val();
+//							var tmpcnt = object.children[2].getAttribute('value');
 							if(tmpcnt!=undefined){ tmpval+=tmpcnt; }
 							data.PartnerSlotNumber += tmpval;
 						}
 					}else{
 						var tmpslot = object.children[1].innerHTML;
-						var tmpcnt = object.children[3].getAttribute('value');
+						var tmpcnt = $("#"+object.children[3].getAttribute('id')+" > input").val();
 						var tmpval =","+tmpslot+":";
 						if(tmpcnt!=undefined){
 							tmpval+=tmpcnt;
@@ -18142,13 +18152,14 @@ function gatherDataAutoD(type){
 					if(globalDeviceType=="Mobile"){
 						if(object.getAttribute('class')=='trAutoDP highlight'){
 							var tmpval = ","+object.children[0].innerHTML+":";
-							var tmpcnt = object.children[2].getAttribute('value');
+							var tmpcnt = $("#"+object.children[2].getAttribute('id')+" > input").val();
+//							var tmpcnt = object.children[2].getAttribute('value');
 							if(tmpcnt!=undefined){ tmpval+=tmpcnt; }
 							data.PartnerSlotNumber += tmpval;
 						}
 					}else{
 						var tmpslot = object.children[1].innerHTML;
-						var tmpcnt = object.children[3].getAttribute('value');
+						var tmpcnt = $("#"+object.children[3].getAttribute('id')+" > input").val();
 						var tmpval =","+tmpslot+":";
 						if(tmpcnt!=undefined){
 							tmpval+=tmpcnt;
@@ -18341,26 +18352,71 @@ function showautoDPortSrchTableByNum(num) {
 		}
         $.each(tbodycon, function(index,object){
             if(globalDeviceType == "Mobile"){
-            	var input = "<td id='"+object.id+"In'><input type='text' placeholder='Count:' style='border:none;font-size:16px;' onKeyPress='return checkPortSlotTotal(event)'></td>";
+            	var input = "<td id='"+object.id+"In'><input type='text' placeholder='Count:' style='border:none;font-size:16px;' onKeyPress='return checkPortSlotTotal(event,this)'></td>";
 				if(object.children.length<=2){$('#'+object.id).append(input);}
 			}else{
-            	var input = "<td id='"+object.id+"In' style='text-align:center;'><input type='text' placeholder='Count:' onKeyPress='return checkPortSlotTotal(event)' style='border:none;width:90%;' disabled='disabled'></td>";
+            	var input = "<td id='"+object.id+"In' style='text-align:center;'><input type='text' placeholder='Count:' onKeyPress='return checkPortSlotTotal(event,this)' style='border:none;width:90%;' disabled='disabled'></td>";
 	            if(object.children.length<=3){$('#'+object.id).append(input);}
 			}
 		 });
    }
 }
 
-function checkPortSlotTotal(evt){
+function checkPortSlotTotal(evt,obj){
 	if(!checkNumberInputChar(evt)){return false;}
 	
 	var tmpcount = 0;
-	$.each($('#autoDPartnerInfoTbody > tr'), function(index,object){
-		if($("#"+(object.children[0].children[0].getAttribute('id'))).is(':checked') 
-			&& object.children[3].getAttribute('value')!=undefined ){
-			tmpcount += parseInt(object.children[3].getAttribute('value'));
+	var charCode = (evt.which) ? evt.which : evt.keyCode;
+    var asciiCode = String.fromCharCode(charCode);
+	var tmpval = "";
+	if($(obj).val()!=undefined){ tmpval += $(obj).val(); }
+	tmpval += asciiCode;
+	var ctr = 0
+	switch(AutoDType.toLowerCase()){
+		case "device":
+			var tbody = "autoDPartnerInfoTbody";
+			var slotchk = "autoDPortSlotChk";
+			var targetA = "autoDPartPortsSrchNum";
+		break;
+		case "testtool": case "server":
+			var tbody = "autoDTestTPartnerInfoTbody";
+			var slotchk = "autoDTestTPortSlotChk";
+			var targetA = "autoDTestTPartPortSrchNumNum";
+		break;
+		case "admin":
+			var tbody = "partSlotInfoAutoDAdminTbody";
+			var slotchk = "autoDAdminpChk";
+			var targetA = "";
+		break;
+	}
+	
+	$.each($('#'+tbody+' > tr'), function(index,object){
+		if($("#"+(object.children[0].children[0].getAttribute('id'))).is(':checked')){ 
+			ctr++;
+			var curVal = "";
+			if($("#"+object.children[3].getAttribute('id')+" > input").val()!=undefined){
+				curVal = $("#"+object.children[3].getAttribute('id')+" > input").val();
+			}
+			if($(obj).parent()[0].id == object.children[3].getAttribute('id')){
+				curVal = tmpval;
+			}
+			if(curVal!=""){ tmpcount += parseInt(curVal); }
 		}
 	});
+//	console.log(ctr+" >>> "+$('#'+tbody+' > tr').length);
+	if(ctr<$('#'+tbody+' > tr').length || ctr == 0){
+		if($('#'+slotchk+' > input').is(':checked')){
+			$('#'+slotchk+' > input').attr('checked',false);
+		}
+	}else{
+		if(!$('#'+slotchk+' > input').is(':checked')){
+			$('#'+slotchk+' > input').trigger('click');
+		}
+	}
+//	console.log(tmpcount);
+	if(targetA){
+		$('#'+targetA).val(tmpcount);
+	}
 }
 
 
@@ -24669,9 +24725,9 @@ function createMapLine(){
 /*----kmmabigny----mar22----*/
 function validateInputs(devArr,detailedFlag,option,type){
 	var optLower = option.toLowerCase(); 
-    var errHost = new Array();
+    var errHost = [];
 	var regPatt = /^[a-z|A-Z][0-9|a-z|\-|\_|A-Z|\.]+$/;
-	var patt = /^disk[0-2]|disk$|^flash[0-1]|flash$|^slot[0-1]|^NVRAM$|^FTP$/i;
+	var patt = /^disk[0-2]|disk$|^flash[0-1]|flash$|^slot[0-1]|^NVRAM$|^FTP$|^TFTP$/i;
 	for(var a=0; a<devArr.length; a++){
 		var urlVal = $('#tb'+option+type+'URL'+devArr[a]).val();
 		var urlDesti = $('#tb'+option+type+'Destination'+devArr[a]).val();
@@ -24683,17 +24739,17 @@ function validateInputs(devArr,detailedFlag,option,type){
 		var host = $('#tr'+optLower+type+devArr[a]).find('td').eq(1).text();
 		if(!detailedFlag && urlVal==""
 		|| !detailedFlag && urlVal!="" && urlVal.split(':').length!=2
-		|| detailedFlag && path=="" && fname==""
+		|| detailedFlag && pathVal=="" && fname==""
 		|| detailedFlag && ipVal!="" && checkIP(ipVal)
-		|| detailedFlag && pathVal!="" && patt.test(pathVal)==false
-		|| detailedFlag && fnameVal!="" && patt.test(fnameVal)==false
-		|| detailedFlag && protoVal!="" && /^FTP$/i.test(protoVal)==false){
+		|| detailedFlag && pathVal!="" && regPatt.test(pathVal)==false
+		|| detailedFlag && fnameVal!="" && regPatt.test(fnameVal)==false
+		|| detailedFlag && protoVal!="" && /^FTP$|^TFTP$/i.test(protoVal)==false){
 			errHost.push(host);
 		}
 		if(!detailedFlag && urlVal!="" && urlVal.split(':').length==2){
 			var urlsp = urlVal.split(':')[0];
 			if(patt.test(urlsp)==false){ errHost.push(host); }
-			if(/^FTP$/i.test(urlsp)){
+			if(/^FTP$|^TFTP$/i.test(urlsp)){
 				var urlsp2 = urlVal.split("://")[1].split("/");
 			}else if(urlVal.split(":/")[1]!=undefined){
 				var urlsp2 = urlVal.split(":/")[1].split("/");
@@ -24701,7 +24757,9 @@ function validateInputs(devArr,detailedFlag,option,type){
 				var urlsp2 = urlVal.split(":")[1].split("/");
 			}
 			for(var x=0; x<urlsp2.length; x++){
-				if(regPatt.test(urlsp2[x])==false){ errHost.push(host); }
+				if(!regPatt.test(urlsp2[x]) && checkIP(urlsp2[x])){ 
+					errHost.push(host); 
+				}
 			}
 		}
 		if(!detailedFlag && urlVal!="" && option=="Load"){

@@ -20,7 +20,8 @@ function loadReserve(){
 		limit = showMoreInfo;
 		var page = 1;
 	}
-	var url ='https://'+CURRENT_IP+'/cgi-bin/NFast_3-0/CGI/RESOURCEMANAGEMENT/NFastRMCGI.py?action=ReservationReserve&query={"QUERY":[{"limit":"'+limit+'","page":"'+page+'","sort":"","orderby":"","user":"'+globalUserName+'","filter":"","domain":"","start":"","status":"","timezone":"'+timezone[0]+timezone[1]+timezone[2]+'^'+timezone[3]+'"}]}&version="3.0"';
+	var url = getURL('RM4')+'action=ReservationReserve&query={"QUERY":[{"limit":"'+limit+'","page":"'+page+'","sort":"","orderby":"","user":"'+globalUserName+'","filter":"","domain":"","start":"","status":"","timezone":"'+timezone[0]+timezone[1]+timezone[2]+'^'+timezone[3]+'"}]}&version="3.0"';
+	//var url ='https://'+CURRENT_IP+'/cgi-bin/NFast_3-0/CGI/RESOURCEMANAGEMENT/NFastRMCGI.py?action=ReservationReserve&query={"QUERY":[{"limit":"'+limit+'","page":"'+page+'","sort":"","orderby":"","user":"'+globalUserName+'","filter":"","domain":"","start":"","status":"","timezone":"'+timezone[0]+timezone[1]+timezone[2]+'^'+timezone[3]+'"}]}&version="3.0"';
 	if(globalDeviceType == "Mobile"){
 		loading('show');
 	}else{
@@ -185,7 +186,8 @@ function loadReserve(){
 
 function loadReserveRelease(){
 		
-	var url = 'https://'+CURRENT_IP+'/cgi-bin/NFast_3-0/CGI/RESOURCEMANAGEMENT/NFastRMCGI.py?action=getseldev&query={"QUERY":[{"limit":"50","page":"1","resourceid":"'+globalResourceId+'"}]}';
+	//var url = 'https://'+CURRENT_IP+'/cgi-bin/NFast_3-0/CGI/RESOURCEMANAGEMENT/NFastRMCGI.py?action=getseldev&query={"QUERY":[{"limit":"50","page":"1","resourceid":"'+globalResourceId+'"}]}';
+	var url = getURL('RM4')+'action=getseldev&query={"QUERY":[{"limit":"50","page":"1","resourceid":"'+globalResourceId+'"}]}';
 	//var url = 'https://'+CURRENT_IP+'/cgi-bin/Final/NFast_RM/NFastRMCGI.py?action=getseldev&query=limit=50`page=1`resourceid='+globalResourceId;
 	$.ajax({
         url: url,
@@ -249,7 +251,8 @@ function loadReserveRelease(){
 	});
 }
 function loadReserveEdit(){
-	var url = 'https://'+CURRENT_IP+'/cgi-bin/Final/NFast_RM/NFastRMCGI.py?action=getseldev&query=limit=50`page=1`resourceid='+globalResourceId;
+	var url = getURL('RM4')+'action=getseldev&query=limit=50`page=1`resourceid='+globalResourceId;
+	//var url = 'https://'+CURRENT_IP+'/cgi-bin/Final/NFast_RM/NFastRMCGI.py?action=getseldev&query=limit=50`page=1`resourceid='+globalResourceId;
 	//var url = 'https://'+CURRENT_IP+'/cgi-bin/NFast_3-0/CGI/RESOURCEMANAGEMENT/NFastRMCGI.py?action=getseldev&query={"QUERY":[{"limit":"50","page":"1","resourceid":"'+globalResourceId+'"}]}';
 	$.ajax({
         url: url,
@@ -343,7 +346,8 @@ function loadConnectivity(){
 		var page = 1;
 	}
 //	var url = 'https://'+CURRENT_IP+'/cgi-bin/NFast_3-0/CGI/RESOURCEMANAGEMENT/NFastRMCGI.py?action=ReservationConnectivity&query=limit='+limit+'`page='+page+'`sort=`orderby=`user='+globalUserName+'`filter=`domain=`start=`status=`timezone='+timezone[0]+timezone[1]+timezone[2]+'^'+timezone[3]+'&version=3.0';
-	var url ='https://'+CURRENT_IP+'/cgi-bin/NFast_3-0/CGI/RESOURCEMANAGEMENT/NFastRMCGI.py?action=ReservationConnectivity&query={"QUERY":[{"limit":"'+limit+'","page":"'+page+'","sort":"","orderby":"","user":"'+globalUserName+'","filter":"","domain":"","start":"","status":"","timezone":"'+timezone[0]+timezone[1]+timezone[2]+'^'+timezone[3]+'"}]}&version="3.0"';
+//	var url ='https://'+CURRENT_IP+'/cgi-bin/NFast_3-0/CGI/RESOURCEMANAGEMENT/NFastRMCGI.py?action=ReservationConnectivity&query={"QUERY":[{"limit":"'+limit+'","page":"'+page+'","sort":"","orderby":"","user":"'+globalUserName+'","filter":"","domain":"","start":"","status":"","timezone":"'+timezone[0]+timezone[1]+timezone[2]+'^'+timezone[3]+'"}]}&version="3.0"';
+	var url =getURL('RM4')+'action=ReservationConnectivity&query={"QUERY":[{"limit":"'+limit+'","page":"'+page+'","sort":"","orderby":"","user":"'+globalUserName+'","filter":"","domain":"","start":"","status":"","timezone":"'+timezone[0]+timezone[1]+timezone[2]+'^'+timezone[3]+'"}]}&version="3.0"';
 	if(globalDeviceType == "Mobile"){
 		loading('show');
 	}else{
@@ -567,7 +571,8 @@ function loadPort(){
 
 	//	var url = 'https://'+CURRENT_IP+'/cgi-bin/NFast_3-0/CGI/RESOURCEMANAGEMENT/NFastRMCGI.py?action=ReservationPort&query=limit='+limit+'`page='+page+'`sort=`orderby=`user='+globalUserName+'`filter=`domain=`start=`status=`timezone='+timezone[0]+timezone[1]+timezone[2]+'^'+timezone[3]+'&version=3.0';
 
-		var url ='https://'+CURRENT_IP+'/cgi-bin/NFast_3-0/CGI/RESOURCEMANAGEMENT/NFastRMCGI.py?action=ReservationPort&query={"QUERY":[{"limit":"'+limit+'","page":"'+page+'","sort":"","orderby":"","user":"'+globalUserName+'","filter":"","domain":"","start":"","status":"","timezone":"'+timezone[0]+timezone[1]+timezone[2]+'^'+timezone[3]+'"}]}&version="3.0"';
+//		var url ='https://'+CURRENT_IP+'/cgi-bin/NFast_3-0/CGI/RESOURCEMANAGEMENT/NFastRMCGI.py?action=ReservationPort&query={"QUERY":[{"limit":"'+limit+'","page":"'+page+'","sort":"","orderby":"","user":"'+globalUserName+'","filter":"","domain":"","start":"","status":"","timezone":"'+timezone[0]+timezone[1]+timezone[2]+'^'+timezone[3]+'"}]}&version="3.0"';
+		var url = getURL('RM4')+'action=ReservationPort&query={"QUERY":[{"limit":"'+limit+'","page":"'+page+'","sort":"","orderby":"","user":"'+globalUserName+'","filter":"","domain":"","start":"","status":"","timezone":"'+timezone[0]+timezone[1]+timezone[2]+'^'+timezone[3]+'"}]}&version="3.0"';
 		if(globalDeviceType == "Mobile"){
 			loading('show');
 		}else{
@@ -734,7 +739,8 @@ function loadHistory(){
 
 		//var url = 'https://'+CURRENT_IP+'/cgi-bin/NFast_3-0/CGI/RESOURCEMANAGEMENT/NFastRMCGI.py?action=ReservationHistory&query=limit='+limit+'`page='+page+'`sort=`orderby=`user='+globalUserName+'`filter=`domain=`start=`status=`timezone='+timezone[0]+timezone[1]+timezone[2]+'^'+timezone[3]+'&version=3.0';
 
-		var url ='https://'+CURRENT_IP+'/cgi-bin/NFast_3-0/CGI/RESOURCEMANAGEMENT/NFastRMCGI.py?action=ReservationHistory&query={"QUERY":[{"limit":"'+limit+'","page":"'+page+'","sort":"","orderby":"","user":"'+globalUserName+'","filter":"","domain":"","start":"","status":"","timezone":"'+timezone[0]+timezone[1]+timezone[2]+'^'+timezone[3]+'"}]}';
+		var url =getURL('RM4')+'action=ReservationHistory&query={"QUERY":[{"limit":"'+limit+'","page":"'+page+'","sort":"","orderby":"","user":"'+globalUserName+'","filter":"","domain":"","start":"","status":"","timezone":"'+timezone[0]+timezone[1]+timezone[2]+'^'+timezone[3]+'"}]}';
+		//var url ='https://'+CURRENT_IP+'/cgi-bin/NFast_3-0/CGI/RESOURCEMANAGEMENT/NFastRMCGI.py?action=ReservationHistory&query={"QUERY":[{"limit":"'+limit+'","page":"'+page+'","sort":"","orderby":"","user":"'+globalUserName+'","filter":"","domain":"","start":"","status":"","timezone":"'+timezone[0]+timezone[1]+timezone[2]+'^'+timezone[3]+'"}]}';
 		if(globalDeviceType == "Mobile"){
 			loading('show');
 		}else{
@@ -983,7 +989,8 @@ function loadImportedDevices(){
 			var page = 1;
 		}
 
-		var url = 'https://'+CURRENT_IP+'/cgi-bin/Final/NFast_RM/NFastRMCGI.py?action=ReservationDeviceAffiliated&query=limit='+showMoreInfo+'`page=1`sort=`orderby=`user='+globalUserName+'`filter=`domain='+domain+"`ZoneName="+zoneName+"`GroupName="+groupName;
+		var url = getURL('RM4')+'action=ReservationDeviceAffiliated&query=limit='+showMoreInfo+'`page=1`sort=`orderby=`user='+globalUserName+'`filter=`domain='+domain+"`ZoneName="+zoneName+"`GroupName="+groupName;
+		//var url = 'https://'+CURRENT_IP+'/cgi-bin/Final/NFast_RM/NFastRMCGI.py?action=ReservationDeviceAffiliated&query=limit='+showMoreInfo+'`page=1`sort=`orderby=`user='+globalUserName+'`filter=`domain='+domain+"`ZoneName="+zoneName+"`GroupName="+groupName;
 		loading('show');
 	$.ajax({
         url: url,
@@ -1701,6 +1708,9 @@ function loadManageDevice(Page){
 			filterManageDevices();
 			autoRefreshTable();
 			rmExpandedView();
+//			checkPrevDevices();
+			genIds = []
+			enDisEditDelBtnManageDev();
 		}
 	});
 }
@@ -6454,7 +6464,7 @@ function checkSingleRM(table,src){
 		});
 		
 	}
-	console.log(ctr+" -- "+ctrtotal);
+//	console.log(ctr+" -- "+ctrtotal);
 	if(ctr == ctrtotal){
 		$('#cb'+globalPageRM).prop('checked',true);
 	}else{
@@ -10143,7 +10153,8 @@ function gatherAutoDAdminInfo(data){
 	var pslots = "";
 	$.each($('#partSlotInfoAutoDAdminTbody > tr'), function(index,object){
 		var tmpslot = object.children[1].innerHTML;
-		var tmpcnt = object.children[3].getAttribute('value');
+//		var tmpcnt = object.children[3].getAttribute('value');
+		var tmpcnt = $("#"+object.children[3].getAttribute('id')+" > input").val();
 		var tmpval =","+tmpslot+":";
 		if(tmpcnt!=undefined){ tmpval+=tmpcnt; }
 		if($("#"+(object.children[0].children[0].getAttribute('id'))).is(':checked')){

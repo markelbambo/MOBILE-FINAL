@@ -10914,6 +10914,36 @@ function checkAllAdminDevices(obj){
 /*
  #######################################################################
  #
+ #  FUNCTION NAME : checkPrevDevices
+ #  AUTHOR        : Cathyrine C. Bobis
+ #  DATE          : April 1, 2014 
+ #  MODIFIED BY   : 
+ #  REVISION DATE :
+ #  REVISION #    : 
+ #  DESCRIPTION   : 
+ #  PARAMETERS    : 
+ #
+ #######################################################################
+*/
+function checkPrevDevices(){
+	var ctr = 0;
+	$('input:checkbox[name="ManageDevicesSel"]').each(function(){
+		if(genIds.indexOf($(this)[0].id)>=0){
+			$(this).attr('checked',true);
+			$(this).parent().parent().addClass('highlight');
+			ctr++;
+		}
+	});
+	if(ctr<$('input:checkbox[name="ManageDevicesSel"]').length || ctr==0){
+		$('#cbManageDevice').attr('checked',false);
+	}else{
+		$('#cbManageDevice').trigger('click');
+	}
+}
+
+/*
+ #######################################################################
+ #
  #  FUNCTION NAME : enDisEditDelBtnManageDev
  #  AUTHOR        : Cathyrine C. Bobis
  #  DATE          : March 31, 2014

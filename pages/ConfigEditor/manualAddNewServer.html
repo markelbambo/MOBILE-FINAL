@@ -127,13 +127,13 @@
 						<td style="width:15px"></td>
 						<td style="text-align:right;white-space:nowrap;">CPU Cores:</td>
 						<td style="text-align:left;">
-							<input id="newcpucores" disabled type="text">
+							<input id="newcpucores" type="text">
 						</td>
 					</tr>
                     <tr>
                         <td style="text-align:right;white-space:nowrap;">Processor Sockets:</td>
                         <td style="text-align:left;">
-                            <input id="newprocessorsockets" disabled type="text" onKeyPress="return checkValConfigText(event);">
+                            <input id="newprocessorsockets" type="text" onKeyPress="return checkValConfigText(event);">
                         </td>
                         <td style="width:15px"></td>
                         <td style="text-align:right;">Cores Sockets:</td>
@@ -144,7 +144,7 @@
                     <tr>
                         <td style="text-align:right;white-space:nowrap;">Logical Processors:</td>
                         <td style="text-align:left;">
-                            <input id="newlogicalprocessors" disabled type="text" onKeyPress="return checkValConfigText(event);">
+                            <input id="newlogicalprocessors" type="text" onKeyPress="return checkValConfigText(event);">
                         </td>
                         <td style="width:15px"></td>
                         <td style="text-align:right;">Server Type:</td>
@@ -229,5 +229,5 @@
 		</div>
 		<div id="autoDbreakline"><br/></div>
 		<a href="#" id="OKSaveNewDevice" onclick ="saveNewDeviceInfo('newserverPopup')" data-role="button" data-mini="true" data-inline="true" style="width:60px;">Ok</a>
-    	<a href="#" id="cancelAutoDDevice" data-role="button" data-mini="true" data-inline="true">Cancel</a>
+    	<a href="#" id="cancelManulaAddServerDDevice" data-role="button" data-mini="true" data-inline="true">Cancel</a>
 </div>

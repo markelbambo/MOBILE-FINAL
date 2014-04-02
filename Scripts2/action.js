@@ -494,6 +494,8 @@ function loadActiveTableQuery(ths){
 				}
 				if(globalDeviceType == "Mobile"){
 					$("#LoadActiveTable > tbody").empty().append(html);
+					$("#LoadActiveTable").trigger('create');
+//					$("#LoadActiveTable").table('refresh');
 				}else{
 					$("#ActiveTable > tbody").empty().append(html);
 					$(".ui-dialog").position({
